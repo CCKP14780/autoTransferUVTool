@@ -31,7 +31,7 @@ def autoTransferUV(*args):
 
     for s in sel:
         print(s);
-        cmds.transferAttributes(objParent, s, transferUVs = 2, transferColors = 2, sampleSpace = 4, searchMethod=3, colorBorders=1)
+        cmds.transferAttributes(objParent, s, transferUVs = 2, transferColors = 2, sampleSpace = 5, searchMethod=3, colorBorders=1)
         cmds.DeleteHistory() 
     
 transferUI();
