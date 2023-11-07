@@ -1,0 +1,40 @@
+// Get scripts location
+global string $gShelfTopLevel;
+string $currentShelf = `tabLayout -query -selectTab $gShelfTopLevel`;
+setParent $currentShelf;
+
+
+// Create naming and command
+string $scriptLocation = `scriptLocation`;
+string $scriptName = "autoTransferUV";
+string $command = "import sys\nautoTransferUVPath = '" + $scriptLocation + "scripts'\nsystemPath = sys.path\nif autoTransferUVPath in systemPath:\n    systemPath.remove(autoTransferUVPath)\nsys.path.insert(0, autoTransferUVPath)\nimport autoTransferUV_scripts.autoTransferUV as transferUV\ntransferUV.transferUI()";
+
+
+// Install button to current shelf
+string $icon = $scriptLocation + "icons/autoTransferUV_icons/transferUvIcon.png";
+shelfButton
+    -command $command
+    -annotation $scriptName
+    -label $scriptName
+    -image $icon
+    -style "iconOnly"
+    -sourceType "python";
+
+
+// Print naming
+print ("// "+$scriptName+" For Animation has been added to current shelf.\n");
+
+
+// Helper functions for locating script's location
+global proc scriptLocator (){}
+global proc string scriptLocation ()
+{
+    string $whatIs=`whatIs scriptLocator`;
+    string $fullPath=`substring $whatIs 25 999`;
+    string $buffer[];
+    int $numTok=`tokenize $fullPath "/" $buffer`;
+    int $numLetters=size($fullPath);
+    int $numLettersLastFolder=size($buffer[$numTok-1]);
+    string $scriptLocation=`substring $fullPath 1 ($numLetters-$numLettersLastFolder)`;
+    return $scriptLocation;
+}
