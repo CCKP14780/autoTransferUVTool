@@ -31,7 +31,8 @@ def autoTransferUV(*args):
 
     for s in sel:
         print(s);
-        cmds.transferAttributes(objParent, s, transferUVs = 2, transferColors = 2, sampleSpace = 5, searchMethod=3, colorBorders=1)
+        #transferAttributes -transferPositions 0 -transferNormals 0 -transferUVs 2 -transferColors 2 -sampleSpace 5 -sourceUvSpace "map1" -targetUvSpace "map1" -searchMethod 3-flipUVs 0 -colorBorders 1 ;
+        cmds.transferAttributes(objParent, s, transferUVs = 2, transferColors = 2, sampleSpace = 5, searchMethod=3, colorBorders=1,flipUVs=0)
         cmds.DeleteHistory() 
     
 transferUI();
